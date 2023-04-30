@@ -227,3 +227,52 @@ function getChangeLanguage() {
     language = 'en';
   }
 }
+
+function buttonClick(evt) {
+  const point = evt.target.textContent;
+  const start = textArea.selectionStart;
+  const end = textArea.selectionEnd;
+
+  if (point === 'Backspace') {
+    if (start === end) {
+      textArea.setRangeText('', start - 1, end, 'end');
+    } else {
+      textArea.setRangeText('', start, end, 'select');
+    }
+  } else if (point === 'Tab') {
+    textArea.setRangeText('   ', start, end, 'end');
+  } else if (point === 'Del') {
+    textArea.setRangeText('', start, end + 1, 'end');
+  } else if (point === 'Enter') {
+    textArea.setRangeText('\n', start, end, 'end');
+  } else if (['Shift', 'Alt', 'Ctrl', 'Win'].includes((point))) {
+  } else if (point === 'CapsLock') {
+    getChangeForCapsLock();
+  } else {
+    evt.target.style.backgroundColor = 'green';
+    textArea.setRangeText(point, start, end, 'end');
+    textArea.focus();
+  }
+}
+
+function ColorOfButtonOn(evt) {
+  const key = evt.code;
+  const button = document.querySelector(`[data-name="${key}"]`);
+  button.style.backgroundColor = 'white';
+}
+
+function ColorOfButtonOff(evt) {
+  const key = evt.code;
+  const button = document.querySelector(`[data-name="${key}"]`);
+  button.style.backgroundColor = '';
+}
+
+window.addEventListener('keydown', (evt) => {
+  textArea.focus();
+  ColorOfButtonOn(evt);
+});
+
+window.addEventListener('keyup', (evt) => {
+  textArea.focus();
+  ColorOfButtonOff(evt);
+});
