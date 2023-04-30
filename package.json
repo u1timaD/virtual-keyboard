@@ -1,0 +1,26 @@
+{
+  "name": "virtual-keyboard",
+  "private": true,
+  "description": "«{{projectTitle}}»",
+  "repository": {
+    "type": "git",
+    "url": "{{sshUrl}}"
+  },
+  "bugs": {
+    "url": "{{bugsUrl}}"
+  },
+  "devDependencies": {
+    "browser-sync": "2.27.7",
+    "eslint": "^8.39.0",
+    "eslint-config-airbnb": "^19.0.4"
+  },
+  "license": "MIT",
+  "scripts": {
+    "start": "browser-sync start --server --no-ui --files \"js/**/*.js\"",
+    "lint": "eslint js/"
+  },
+  "engines": {
+    "node": "16.x",
+    "npm": "8.x"
+  }
+}
