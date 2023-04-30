@@ -276,3 +276,47 @@ window.addEventListener('keyup', (evt) => {
   textArea.focus();
   ColorOfButtonOff(evt);
 });
+
+// ВВОД С КЛАВИАТУРЫ
+
+function pressOnButton(evt) {
+  evt.preventDefault();
+  const start = textArea.selectionStart;
+  const end = textArea.selectionEnd;
+  const key = evt.code;
+  const button = document.querySelector(`[data-name="${key}"]`).textContent;
+
+  if (key === 'Backspace') {
+    if (start === end) {
+      textArea.setRangeText('', start - 1, end, 'end');
+    } else {
+      textArea.setRangeText('', start, end, 'select');
+    }
+  } else if (key === 'Tab') {
+    textArea.setRangeText('   ', start, end, 'end');
+  } else if (key === 'Delete') {
+    textArea.setRangeText('', start, end + 1, 'end');
+  } else if (key === 'Enter') {
+    textArea.setRangeText('\n', start, end, 'end');
+  } else if (['AltLeft', 'AltRight', 'ControlLeft', 'ControlRight', 'MetaLeft'].includes((key))) {
+  } else if (key === 'ShiftLeft' || key === 'ShiftRight') {
+    console.log('Сработало нажатие');
+    getChangeCase();
+  } else if (key === 'CapsLock') {
+    getChangeForCapsLock();
+  } else {
+    textArea.setRangeText(button, start, end, 'end');
+    textArea.focus();
+  }
+}
+
+function pressOffButton(evt) {
+  const key = evt.code;
+  if (key === 'ShiftLeft' || key === 'ShiftRight') {
+    console.log('Сработало отжатие');
+    getChangeCase();
+  }
+}
+
+textArea.addEventListener('keydown', pressOnButton);
+textArea.addEventListener('keyup', pressOffButton);
