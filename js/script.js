@@ -175,3 +175,55 @@ function getRenderWords(lang = 0) {
   }
 }
 getRenderWords();
+
+function getChangeForCapsLock() {
+  if (capsLock === 'small' && language === 'en') {
+    capsLock = 'big';
+    getRenderWords();
+  } else if (capsLock === 'big' && language === 'en') {
+    capsLock = 'small';
+    getRenderWords();
+  } else if (capsLock === 'small' && language === 'ru') {
+    capsLock = 'big';
+    getRenderWords(2);
+  } else if (capsLock === 'big' && language === 'ru') {
+    capsLock = 'small';
+    getRenderWords(2);
+  }
+}
+
+function getChangeCase() {
+  if (capsLock === 'small' && language === 'en') {
+    capsLock = 'big';
+    getRenderWords(1);
+    shift = 'on';
+  } else if (capsLock === 'big' && language === 'en') {
+    capsLock = 'small';
+    getRenderWords(0);
+    shift = 'off';
+  } else if (capsLock === 'small' && language === 'ru') {
+    capsLock = 'big';
+    getRenderWords(3);
+    shift = 'on';
+  } else if (capsLock === 'big' && language === 'ru') {
+    capsLock = 'small';
+    getRenderWords(2);
+    shift = 'off';
+  }
+}
+
+function getChangeLanguage() {
+  if (capsLock === 'small' && language === 'en') {
+    getRenderWords(2);
+    language = 'ru';
+  } else if (capsLock === 'small' && language === 'ru') {
+    getRenderWords();
+    language = 'en';
+  } else if (capsLock === 'big' && language === 'en') {
+    getRenderWords(2);
+    language = 'ru';
+  } else if (capsLock === 'big' && language === 'ru') {
+    getRenderWords();
+    language = 'en';
+  }
+}
