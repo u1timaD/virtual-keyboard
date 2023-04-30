@@ -144,3 +144,34 @@ const getCreatKeyBoard = function () {
 
 // Отрисовываем клавиатуру
 textArea.insertAdjacentElement('afterend', getCreatKeyBoard());
+
+let capsLock = 'small';
+let language = 'en';
+let shift = 'off';
+
+// отрисосвываем буквы на клавиатуру
+// Создать кнопку через Class и добавить ей те или иные свойства
+function getRenderWords(lang = 0) {
+  const keyName = document.querySelectorAll('.key-name');
+  for (let i = 0; i < en.length; i += 1) {
+    const word = Object.values(en[i])[0][lang];
+    const dataName = Object.keys(en[i])[0];
+
+    if (capsLock === 'small' && shift === 'off') {
+      keyName[i].textContent = word;
+      keyName[i].dataset.name = dataName;
+    } else if (capsLock === 'big' && shift === 'on') {
+      keyName[i].textContent = word;
+      keyName[i].dataset.name = dataName;
+    } else if (capsLock === 'small') {
+      keyName[i].textContent = word;
+      keyName[i].dataset.name = dataName;
+    } else if (capsLock === 'big') {
+      keyName[i].textContent = word.charAt(0).toUpperCase() + word.slice(1);
+    }
+  //   else if (capsLock === 'big') {
+  //     keyName[i].textContent = word.charAt(0).toLowerCase() + word.slice(1)
+  // }
+  }
+}
+getRenderWords();
