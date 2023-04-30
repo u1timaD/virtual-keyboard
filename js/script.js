@@ -76,3 +76,71 @@ const en = [
   { ArrowRight: ['\u25B8', '\u25B8', '\u25B8', '\u25B8'] },
   { ControlRight: ['Ctrl', 'Ctrl', 'Ctrl', 'Ctrl'] },
 ];
+
+const getCreatKeyBoard = function () {
+  const keyBoard = document.createElement('section');
+  keyBoard.classList = 'key-board';
+
+  // Разбить это на несколько функций
+  for (let i = 0; i < 5; i += 1) {
+    const keyLine = document.createElement('div');
+    keyLine.classList = 'key-line';
+    keyLine.dataset.line = i;
+    if (i === 0) {
+      for (let j = 0; j < 14; j += 1) {
+        const keyButton = document.createElement('div');
+        keyButton.classList = 'key-button';
+        keyButton.dataset.buttonName = j;
+        const keyName = document.createElement('span');
+        keyName.classList = 'key-name';
+        keyLine.append(keyButton);
+        keyButton.append(keyName);
+      }
+    } else if (i === 1) {
+      for (let j = 0; j < 15; j += 1) {
+        const keyButton = document.createElement('div');
+        keyButton.classList = 'key-button';
+        keyButton.dataset.buttonName = j;
+        const keyName = document.createElement('span');
+        keyName.classList = 'key-name';
+        keyLine.append(keyButton);
+        keyButton.append(keyName);
+      }
+    } else if (i === 2) {
+      for (let j = 0; j < 13; j += 1) {
+        const keyButton = document.createElement('div');
+        keyButton.classList = 'key-button';
+        keyButton.dataset.buttonName = j;
+        const keyName = document.createElement('span');
+        keyName.classList = 'key-name';
+        keyLine.append(keyButton);
+        keyButton.append(keyName);
+      }
+    } else if (i === 3) {
+      for (let j = 0; j < 13; j += 1) {
+        const keyButton = document.createElement('div');
+        keyButton.classList = 'key-button';
+        keyButton.dataset.buttonName = j;
+        const keyName = document.createElement('span');
+        keyName.classList = 'key-name';
+        keyLine.append(keyButton);
+        keyButton.append(keyName);
+      }
+    } else {
+      for (let j = 0; j < 9; j += 1) {
+        const keyButton = document.createElement('div');
+        keyButton.classList = 'key-button';
+        keyButton.dataset.buttonName = j;
+        const keyName = document.createElement('span');
+        keyName.classList = 'key-name';
+        keyLine.append(keyButton);
+        keyButton.append(keyName);
+      }
+    }
+    keyBoard.append(keyLine);
+  }
+  return keyBoard;
+};
+
+// Отрисовываем клавиатуру
+textArea.insertAdjacentElement('afterend', getCreatKeyBoard());
