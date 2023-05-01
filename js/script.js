@@ -1,4 +1,6 @@
-const body = document.querySelector('.body');
+import { keyBoardData, body } from './data.js';
+import { changeToUpperCaseWord, changeToLowerCaseWord } from './util.js';
+
 const textArea = document.createElement('textarea');
 const value = localStorage.getItem('textAreaValue');
 textArea.classList = 'textarea';
@@ -16,82 +18,10 @@ infoBox.textContent = 'Клавиатура создана в операцион
 info.prepend(infoBox);
 body.prepend(info);
 
-const keyBoardData = [
-  { Backquote: ['`', '~', 'ё', 'Ё'] },
-  { Digit1: ['1', '!', '1', '!'] },
-  { Digit2: ['2', '@', '2', '"'] },
-  { Digit3: ['3', '#', '3', '№'] },
-  { Digit4: ['4', '$', '4', ';'] },
-  { Digit5: ['5', '%', '5', '%'] },
-  { Digit6: ['6', '^', '6', ':'] },
-  { Digit7: ['7', '&', '7', '?'] },
-  { Digit8: ['8', '*', '8', '*'] },
-  { Digit9: ['9', '(', '9', '('] },
-  { Digit0: ['0', ')', '0', ')'] },
-  { Minus: ['-', '_', '-', '_'] },
-  { Equal: ['=', '+', '=', '+'] },
-  { Backspace: ['Backspace', 'Backspace', 'Backspace', 'Backspace'] },
-
-  { Tab: ['Tab', 'Tab', 'Tab', 'Tab'] },
-  { KeyQ: ['q', 'q', 'й', 'й'] },
-  { KeyW: ['w', 'w', 'ц', 'ц'] },
-  { KeyE: ['e', 'e', 'у', 'у'] },
-  { KeyR: ['r', 'r', 'к', 'к'] },
-  { KeyT: ['t', 't', 'е', 'е'] },
-  { KeyY: ['y', 'y', 'н', 'н'] },
-  { KeyU: ['u', 'u', 'г', 'г'] },
-  { KeyI: ['i', 'i', 'ш', 'ш'] },
-  { KeyO: ['o', 'o', 'щ', 'щ'] },
-  { KeyP: ['p', 'p', 'з', 'з'] },
-  { BracketLeft: ['[', '{', 'х', 'х'] },
-  { BracketRight: [']', '}', 'ъ', 'ъ'] },
-  { Backslash: ['\\', '|', '\\', '/'] },
-  { Delete: ['Del', 'Del', 'Del', 'Del'] },
-
-  { CapsLock: ['CapsLock', 'CapsLock', 'CapsLock', 'CapsLock'] },
-  { KeyA: ['a', 'a', 'ф', 'ф'] },
-  { KeyS: ['s', 's', 'ы', 'ы'] },
-  { KeyD: ['d', 'd', 'в', 'в'] },
-  { KeyF: ['f', 'f', 'а', 'а'] },
-  { KeyG: ['g', 'g', 'п', 'п'] },
-  { KeyH: ['h', 'h', 'р', 'р'] },
-  { KeyJ: ['j', 'j', 'о', 'о'] },
-  { KeyK: ['k', 'k', 'л', 'л'] },
-  { KeyL: ['l', 'l', 'д', 'д'] },
-  { Semicolon: [';', ':', 'ж', 'ж'] },
-  { Quote: ['\'', '"', 'э', 'э'] },
-  { Enter: ['Enter', 'Enter', 'Enter', 'Enter'] },
-
-  { ShiftLeft: ['Shift', 'Shift', 'Shift', 'Shift'] },
-  { KeyZ: ['z', 'z', 'я', 'я'] },
-  { KeyX: ['x', 'x', 'ч', 'ч'] },
-  { KeyC: ['c', 'c', 'с', 'с'] },
-  { KeyV: ['v', 'v', 'м', 'м'] },
-  { KeyB: ['b', 'b', 'и', 'и'] },
-  { KeyN: ['n', 'n', 'т', 'т'] },
-  { KeyM: ['m', 'm', 'ь', 'ь'] },
-  { Comma: [',', '<', 'б', 'б'] },
-  { Period: ['.', '>', 'ю', 'ю'] },
-  { Slash: ['/', '?', '.', ','] },
-  { ArrowUp: ['\u25B2', '\u25B2', '\u25B2', '\u25B2'] },
-  { ShiftRight: ['Shift', 'Shift', 'Shift', 'Shift'] },
-
-  { ControlLeft: ['Ctrl', 'Ctrl', 'Ctrl', 'Ctrl'] },
-  { MetaLeft: ['Win', 'Win', 'Win', 'Win'] },
-  { AltLeft: ['Alt', 'Alt', 'Alt', 'Alt'] },
-  { Space: [' ', ' ', ' ', ' '] },
-  { AltRight: ['Alt', 'Alt', 'Alt', 'Alt'] },
-  { ArrowLeft: ['\u25C2', '\u25C2', '\u25C2', '\u25C2'] },
-  { ArrowDown: ['\u25BE', '\u25BE', '\u25BE', '\u25BE'] },
-  { ArrowRight: ['\u25B8', '\u25B8', '\u25B8', '\u25B8'] },
-  { ControlRight: ['Ctrl', 'Ctrl', 'Ctrl', 'Ctrl'] },
-];
-
-const getCreatKeyBoard = function () {
+const getCreatKeyBoard = () => {
   const keyBoard = document.createElement('section');
   keyBoard.classList = 'key-board';
 
-  // Разбить это на несколько функций
   for (let i = 0; i < 5; i += 1) {
     const keyLine = document.createElement('div');
     keyLine.classList = 'key-line';
@@ -152,38 +82,19 @@ const getCreatKeyBoard = function () {
   return keyBoard;
 };
 
-// Отрисовываем клавиатуру
 textArea.insertAdjacentElement('afterend', getCreatKeyBoard());
+
+const lang = localStorage.getItem('lang');
 
 let capsLock = 'off';
 let size = 'lower';
 let row = '0';
-let language = 'en';
+let language = lang;
 
-function changeToUpperCaseWord(str) {
-  const words = str.split(' ');
-  for (let i = 0; i < words.length; i += 1) {
-    if (words[i].length <= 1) {
-      words[i] = words[i].toUpperCase();
-    }
-  }
-  return words.join(' ');
-}
-
-function changeToLowerCaseWord(str) {
-  const words = str.split(' ');
-  for (let i = 0; i < words.length; i += 1) {
-    if (words[i].length <= 1) {
-      words[i] = words[i].toLowerCase();
-    }
-  }
-  return words.join(' ');
-}
-
-function getRenderWords(lang = 0) {
+function getRenderWords(item = 0) {
   const keyName = document.querySelectorAll('.key-name');
   for (let i = 0; i < keyBoardData.length; i += 1) {
-    const word = Object.values(keyBoardData[i])[0][lang];
+    const word = Object.values(keyBoardData[i])[0][item];
     const data = Object.keys(keyBoardData[i])[0];
 
     if (capsLock === 'off' && size === 'lower' && row === '0') {
@@ -201,7 +112,12 @@ function getRenderWords(lang = 0) {
     }
   }
 }
-getRenderWords();
+
+if (language === 'ru') {
+  getRenderWords(2);
+} else if (language === 'en') {
+  getRenderWords();
+}
 
 const getChangeCapsLock = () => {
   if (language === 'en') {
@@ -283,15 +199,19 @@ const getChangeLanguage = () => {
   if (capsLock === 'off' && language === 'en') {
     getRenderWords(2);
     language = 'ru';
+    localStorage.setItem('lang', 'ru');
   } else if (capsLock === 'off' && language === 'ru') {
     getRenderWords();
     language = 'en';
+    localStorage.setItem('lang', 'en');
   } if (capsLock === 'on' && language === 'en') {
     getRenderWords(2);
     language = 'ru';
+    localStorage.setItem('lang', 'ru');
   } else if (capsLock === 'on' && language === 'ru') {
     getRenderWords();
     language = 'en';
+    localStorage.setItem('lang', 'en');
   }
 };
 

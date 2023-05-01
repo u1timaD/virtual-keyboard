@@ -15,6 +15,9 @@ module.exports = {
     indent: ['error', 2],
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
+    'import/extensions': [
+      'error', 'ignorePackages',
+    ],
   },
   overrides: [
     {
