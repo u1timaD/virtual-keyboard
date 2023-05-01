@@ -113,13 +113,16 @@ function getRenderWords(item = 0) {
   }
 }
 
-if (language === 'ru') {
-  getRenderWords(2);
+if (localStorage.length === 0) {
+  localStorage.setItem('lang', 'en');
+  getRenderWords();
 } else if (language === 'en') {
   getRenderWords();
+} else if (language === 'ru') {
+  getRenderWords(2);
 }
 
-const getChangeCapsLock = () => {
+function getChangeCapsLock() {
   if (language === 'en') {
     if (capsLock === 'off' && size === 'lower' && row === '0') {
       capsLock = 'on';
@@ -145,7 +148,7 @@ const getChangeCapsLock = () => {
       getRenderWords(2);
     }
   }
-};
+}
 
 const getChangeCase = () => {
   if (language === 'en') {
