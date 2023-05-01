@@ -23,45 +23,45 @@ const en = [
   { Backspace: ['Backspace', 'Backspace', 'Backspace', 'Backspace'] },
 
   { Tab: ['Tab', 'Tab', 'Tab', 'Tab'] },
-  { KeyQ: ['q', 'Q', 'й', 'Й'] },
-  { KeyW: ['w', 'W', 'ц', 'Ц'] },
-  { KeyE: ['e', 'E', 'у', 'У'] },
-  { KeyR: ['r', 'R', 'к', 'К'] },
-  { KeyT: ['t', 'T', 'е', 'Е'] },
-  { KeyY: ['y', 'Y', 'н', 'Н'] },
-  { KeyU: ['u', 'U', 'г', 'Г'] },
-  { KeyI: ['i', 'I', 'ш', 'Ш'] },
-  { KeyO: ['o', 'O', 'щ', 'Щ'] },
-  { KeyP: ['p', 'P', 'з', 'З'] },
-  { BracketLeft: ['[', '{', 'х', 'Х'] },
-  { BracketRight: [']', '}', 'ъ', 'Ъ'] },
+  { KeyQ: ['q', 'q', 'й', 'й'] },
+  { KeyW: ['w', 'w', 'ц', 'ц'] },
+  { KeyE: ['e', 'e', 'у', 'у'] },
+  { KeyR: ['r', 'r', 'к', 'к'] },
+  { KeyT: ['t', 't', 'е', 'е'] },
+  { KeyY: ['y', 'y', 'н', 'н'] },
+  { KeyU: ['u', 'u', 'г', 'г'] },
+  { KeyI: ['i', 'i', 'ш', 'ш'] },
+  { KeyO: ['o', 'o', 'щ', 'щ'] },
+  { KeyP: ['p', 'p', 'з', 'з'] },
+  { BracketLeft: ['[', '{', 'х', 'х'] },
+  { BracketRight: [']', '}', 'ъ', 'ъ'] },
   { Backslash: ['\\', '|', '\\', '/'] },
   { Delete: ['Del', 'Del', 'Del', 'Del'] },
 
   { CapsLock: ['CapsLock', 'CapsLock', 'CapsLock', 'CapsLock'] },
-  { KeyA: ['a', 'A', 'ф', 'Ф'] },
-  { KeyS: ['s', 'S', 'ы', 'Ы'] },
-  { KeyD: ['d', 'D', 'в', 'В'] },
-  { KeyF: ['f', 'F', 'а', 'А'] },
-  { KeyG: ['g', 'G', 'п', 'П'] },
-  { KeyH: ['h', 'H', 'р', 'Р'] },
-  { KeyJ: ['j', 'J', 'о', 'О'] },
-  { KeyK: ['k', 'K', 'л', 'Л'] },
-  { KeyL: ['l', 'L', 'д', 'Д'] },
-  { Semicolon: [';', ':', 'ж', 'Ж'] },
-  { Quote: ['\'', '"', 'э', 'Э'] },
+  { KeyA: ['a', 'a', 'ф', 'ф'] },
+  { KeyS: ['s', 's', 'ы', 'ы'] },
+  { KeyD: ['d', 'd', 'в', 'в'] },
+  { KeyF: ['f', 'f', 'а', 'а'] },
+  { KeyG: ['g', 'g', 'п', 'п'] },
+  { KeyH: ['h', 'h', 'р', 'р'] },
+  { KeyJ: ['j', 'j', 'о', 'о'] },
+  { KeyK: ['k', 'k', 'л', 'л'] },
+  { KeyL: ['l', 'l', 'д', 'д'] },
+  { Semicolon: [';', ':', 'ж', 'ж'] },
+  { Quote: ['\'', '"', 'э', 'э'] },
   { Enter: ['Enter', 'Enter', 'Enter', 'Enter'] },
 
   { ShiftLeft: ['Shift', 'Shift', 'Shift', 'Shift'] },
-  { KeyZ: ['z', 'Z', 'я', 'Я'] },
-  { KeyX: ['x', 'X', 'ч', 'Ч'] },
-  { KeyC: ['c', 'C', 'с', 'С'] },
-  { KeyV: ['v', 'V', 'м', 'М'] },
-  { KeyB: ['b', 'B', 'и', 'и'] },
-  { KeyN: ['n', 'N', 'т', 'Т'] },
-  { KeyM: ['m', 'M', 'ь', 'ь'] },
-  { Comma: [',', '<', 'б', 'Б'] },
-  { Period: ['.', '>', 'ю', 'Ю'] },
+  { KeyZ: ['z', 'z', 'я', 'я'] },
+  { KeyX: ['x', 'x', 'ч', 'ч'] },
+  { KeyC: ['c', 'c', 'с', 'с'] },
+  { KeyV: ['v', 'v', 'м', 'м'] },
+  { KeyB: ['b', 'b', 'и', 'и'] },
+  { KeyN: ['n', 'n', 'т', 'т'] },
+  { KeyM: ['m', 'm', 'ь', 'ь'] },
+  { Comma: [',', '<', 'б', 'б'] },
+  { Period: ['.', '>', 'ю', 'ю'] },
   { Slash: ['/', '?', '.', ','] },
   { ArrowUp: ['\u25B2', '\u25B2', '\u25B2', '\u25B2'] },
   { ShiftRight: ['Shift', 'Shift', 'Shift', 'Shift'] },
@@ -145,36 +145,50 @@ const getCreatKeyBoard = function () {
 // Отрисовываем клавиатуру
 textArea.insertAdjacentElement('afterend', getCreatKeyBoard());
 
-// let capsLock = 'small';
-// let language = 'en';
-// let shift = 'off';
-// let upperCase;
-
 let capsLock = 'off';
 let size = 'lower';
 let row = '0';
+let language = 'en';
 
-// отрисосвываем буквы на клавиатуру
-// Создать кнопку через Class и добавить ей те или иные свойства
+function changeToUpperCaseWord(str) {
+  const words = str.split(' ');
+  for (let i = 0; i < words.length; i++) {
+    if (words[i].length <= 1) {
+      words[i] = words[i].toUpperCase();
+    }
+  }
+  return words.join(' ');
+}
+
+function changeToLowerCaseWord(str) {
+  const words = str.split(' ');
+  for (let i = 0; i < words.length; i++) {
+    if (words[i].length <= 1) {
+      words[i] = words[i].toLowerCase();
+    }
+  }
+  return words.join(' ');
+}
+
 function getRenderWords(lang = 0) {
   const keyName = document.querySelectorAll('.key-name');
   for (let i = 0; i < en.length; i += 1) {
     const word = Object.values(en[i])[0][lang];
 
     if (capsLock === 'off' && size === 'lower' && row === '0') {
-      console.log('Маленькие');
-      keyName[i].textContent = word.charAt(0).toLowerCase() + word.slice(1);
+      keyName[i].textContent = changeToLowerCaseWord(word);
       keyName[i].dataset.name = Object.keys(en[i])[0];
-    } else if (capsLock === 'on' && size === 'upper' && row === '1') {
-      console.log('большие');
-      keyName[i].textContent = word.charAt(0).toUpperCase() + word.slice(1);
+    }
+    else if (capsLock === 'on' && size === 'upper' && row === '1') {
+      keyName[i].textContent = changeToUpperCaseWord(word);
       keyName[i].dataset.name = Object.keys(en[i])[0];
-    } else if (capsLock === 'off' && size === 'upper' && row === '1') {
-      console.log('Ббольшие без капса');
-      keyName[i].textContent = word.charAt(0).toUpperCase() + word.slice(1);
+    }
+    else if (capsLock === 'off' && size === 'upper' && row === '1') {
+      keyName[i].textContent = changeToUpperCaseWord(word);
       keyName[i].dataset.name = Object.keys(en[i])[0];
-    } else if (capsLock === 'on' && size === 'lower' && row === '0') {
-      keyName[i].textContent = word.charAt(0).toLowerCase() + word.slice(1);
+    }
+    else if (capsLock === 'on' && size === 'lower' && row === '0') {
+      keyName[i].textContent = changeToLowerCaseWord(word);
       keyName[i].dataset.name = Object.keys(en[i])[0];
     }
   }
@@ -182,54 +196,96 @@ function getRenderWords(lang = 0) {
 getRenderWords();
 
 const getChangeCapsLock = () => {
-  if (capsLock === 'off' && size === 'lower' && row === '0') {
-    capsLock = 'on';
-    size = 'upper';
-    row = '1';
-    getRenderWords(0);
-  } else if (capsLock === 'on' && size === 'upper' && row === '1') {
-    capsLock = 'off';
-    size = 'lower';
-    row = '0';
-    getRenderWords(0);
+  if (language === 'en') {
+    if (capsLock === 'off' && size === 'lower' && row === '0') {
+      capsLock = 'on';
+      size = 'upper';
+      row = '1';
+      getRenderWords(0);
+    } else if (capsLock === 'on' && size === 'upper' && row === '1') {
+      capsLock = 'off';
+      size = 'lower';
+      row = '0';
+      getRenderWords(0);
+    }
+  } else if (language === 'ru') {
+    if (capsLock === 'off' && size === 'lower' && row === '0') {
+      capsLock = 'on';
+      size = 'upper';
+      row = '1';
+      getRenderWords(2);
+    } else if (capsLock === 'on' && size === 'upper' && row === '1') {
+      capsLock = 'off';
+      size = 'lower';
+      row = '0';
+      getRenderWords(2);
+    }
   }
 };
 
 const getChangeCase = () => {
-  if (capsLock === 'off' && size === 'lower' && row === '0') {
-    size = 'upper';
-    row = '1';
-    getRenderWords(1);
-  } else if (capsLock === 'off' && size === 'upper' && row === '1') {
-    size = 'lower';
-    row = '0';
-    getRenderWords(0);
-  } else if (capsLock === 'on' && size === 'upper' && row === '1') {
-    size = 'lower';
-    row = '0';
-    getRenderWords(1);
-  } else if (capsLock === 'on' && size === 'lower' && row === '0') {
-    size = 'upper';
-    row = '1';
-    getRenderWords(0);
+  if (language === 'en') {
+    if (capsLock === 'off') {
+      if (size === 'lower' && row === '0') {
+        size = 'upper';
+        row = '1';
+        getRenderWords(1);
+      } else if (size === 'upper' && row === '1') {
+        size = 'lower';
+        row = '0';
+        getRenderWords(0);
+      }
+    } else if (capsLock === 'on') {
+      if (size === 'upper' && row === '1') {
+        size = 'lower';
+        row = '0';
+        getRenderWords(1);
+      } else if (size === 'lower' && row === '0') {
+        size = 'upper';
+        row = '1';
+        getRenderWords(0);
+      }
+    }
+  } else if (language === 'ru') {
+    if (capsLock === 'off') {
+      if (size === 'lower' && row === '0') {
+        size = 'upper';
+        row = '1';
+        getRenderWords(3);
+      } else if (size === 'upper' && row === '1') {
+        size = 'lower';
+        row = '0';
+        getRenderWords(2);
+      }
+    } else if (capsLock === 'on') {
+      if (size === 'upper' && row === '1') {
+        size = 'lower';
+        row = '0';
+        getRenderWords(3);
+      } else if (size === 'lower' && row === '0') {
+        size = 'upper';
+        row = '1';
+        getRenderWords(2);
+      }
+    }
   }
 };
 
-function getChangeLanguage() {
-  if (capsLock === 'small' && language === 'en') {
+const getChangeLanguage = () => {
+  if (capsLock === 'off' && language === 'en') {
     getRenderWords(2);
     language = 'ru';
-  } else if (capsLock === 'small' && language === 'ru') {
+  } else if (capsLock === 'off' && language === 'ru') {
     getRenderWords();
     language = 'en';
-  } else if (capsLock === 'big' && language === 'en') {
+  } if (capsLock === 'on' && language === 'en') {
     getRenderWords(2);
     language = 'ru';
-  } else if (capsLock === 'big' && language === 'ru') {
+  } else if (capsLock === 'on' && language === 'ru') {
     getRenderWords();
     language = 'en';
   }
-}
+};
 
 function ColorOfButtonOn(evt) {
   const key = evt.code;
@@ -253,8 +309,6 @@ window.addEventListener('keyup', (evt) => {
   ColorOfButtonOff(evt);
 });
 
-// ВВОД С КЛАВИАТУРЫ
-
 function pressOnButton(evt) {
   evt.preventDefault();
   const start = textArea.selectionStart;
@@ -275,11 +329,12 @@ function pressOnButton(evt) {
   } else if (key === 'Enter') {
     textArea.setRangeText('\n', start, end, 'end');
   } else if (['AltLeft', 'AltRight', 'ControlLeft', 'ControlRight', 'MetaLeft'].includes((key))) {
+    textArea.focus();
   } else if (key === 'ShiftLeft' || key === 'ShiftRight') {
     console.log('Сработало нажатие');
     getChangeCase();
   } else if (key === 'CapsLock') {
-    getChangeForCapsLock();
+    getChangeCapsLock();
   } else {
     textArea.setRangeText(button, start, end, 'end');
     textArea.focus();
@@ -289,7 +344,6 @@ function pressOnButton(evt) {
 function pressOffButton(evt) {
   const key = evt.code;
   if (key === 'ShiftLeft' || key === 'ShiftRight') {
-    console.log('Сработало отжатие');
     getChangeCase();
   }
 }
