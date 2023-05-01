@@ -145,9 +145,14 @@ const getCreatKeyBoard = function () {
 // Отрисовываем клавиатуру
 textArea.insertAdjacentElement('afterend', getCreatKeyBoard());
 
-let capsLock = 'small';
-let language = 'en';
-let shift = 'off';
+// let capsLock = 'small';
+// let language = 'en';
+// let shift = 'off';
+// let upperCase;
+
+let capsLock = 'off';
+let size = 'lower';
+let row = '0';
 
 // отрисосвываем буквы на клавиатуру
 // Создать кнопку через Class и добавить ей те или иные свойства
@@ -155,62 +160,60 @@ function getRenderWords(lang = 0) {
   const keyName = document.querySelectorAll('.key-name');
   for (let i = 0; i < en.length; i += 1) {
     const word = Object.values(en[i])[0][lang];
-    const dataName = Object.keys(en[i])[0];
 
-    if (capsLock === 'small' && shift === 'off') {
-      keyName[i].textContent = word;
-      keyName[i].dataset.name = dataName;
-    } else if (capsLock === 'big' && shift === 'on') {
-      keyName[i].textContent = word;
-      keyName[i].dataset.name = dataName;
-    } else if (capsLock === 'small') {
-      keyName[i].textContent = word;
-      keyName[i].dataset.name = dataName;
-    } else if (capsLock === 'big') {
+    if (capsLock === 'off' && size === 'lower' && row === '0') {
+      console.log('Маленькие');
+      keyName[i].textContent = word.charAt(0).toLowerCase() + word.slice(1);
+      keyName[i].dataset.name = Object.keys(en[i])[0];
+    } else if (capsLock === 'on' && size === 'upper' && row === '1') {
+      console.log('большие');
       keyName[i].textContent = word.charAt(0).toUpperCase() + word.slice(1);
+      keyName[i].dataset.name = Object.keys(en[i])[0];
+    } else if (capsLock === 'off' && size === 'upper' && row === '1') {
+      console.log('Ббольшие без капса');
+      keyName[i].textContent = word.charAt(0).toUpperCase() + word.slice(1);
+      keyName[i].dataset.name = Object.keys(en[i])[0];
+    } else if (capsLock === 'on' && size === 'lower' && row === '0') {
+      keyName[i].textContent = word.charAt(0).toLowerCase() + word.slice(1);
+      keyName[i].dataset.name = Object.keys(en[i])[0];
     }
-  //   else if (capsLock === 'big') {
-  //     keyName[i].textContent = word.charAt(0).toLowerCase() + word.slice(1)
-  // }
   }
 }
 getRenderWords();
 
-function getChangeForCapsLock() {
-  if (capsLock === 'small' && language === 'en') {
-    capsLock = 'big';
-    getRenderWords();
-  } else if (capsLock === 'big' && language === 'en') {
-    capsLock = 'small';
-    getRenderWords();
-  } else if (capsLock === 'small' && language === 'ru') {
-    capsLock = 'big';
-    getRenderWords(2);
-  } else if (capsLock === 'big' && language === 'ru') {
-    capsLock = 'small';
-    getRenderWords(2);
-  }
-}
-
-function getChangeCase() {
-  if (capsLock === 'small' && language === 'en') {
-    capsLock = 'big';
-    getRenderWords(1);
-    shift = 'on';
-  } else if (capsLock === 'big' && language === 'en') {
-    capsLock = 'small';
+const getChangeCapsLock = () => {
+  if (capsLock === 'off' && size === 'lower' && row === '0') {
+    capsLock = 'on';
+    size = 'upper';
+    row = '1';
     getRenderWords(0);
-    shift = 'off';
-  } else if (capsLock === 'small' && language === 'ru') {
-    capsLock = 'big';
-    getRenderWords(3);
-    shift = 'on';
-  } else if (capsLock === 'big' && language === 'ru') {
-    capsLock = 'small';
-    getRenderWords(2);
-    shift = 'off';
+  } else if (capsLock === 'on' && size === 'upper' && row === '1') {
+    capsLock = 'off';
+    size = 'lower';
+    row = '0';
+    getRenderWords(0);
   }
-}
+};
+
+const getChangeCase = () => {
+  if (capsLock === 'off' && size === 'lower' && row === '0') {
+    size = 'upper';
+    row = '1';
+    getRenderWords(1);
+  } else if (capsLock === 'off' && size === 'upper' && row === '1') {
+    size = 'lower';
+    row = '0';
+    getRenderWords(0);
+  } else if (capsLock === 'on' && size === 'upper' && row === '1') {
+    size = 'lower';
+    row = '0';
+    getRenderWords(1);
+  } else if (capsLock === 'on' && size === 'lower' && row === '0') {
+    size = 'upper';
+    row = '1';
+    getRenderWords(0);
+  }
+};
 
 function getChangeLanguage() {
   if (capsLock === 'small' && language === 'en') {
@@ -247,7 +250,7 @@ function buttonClick(evt) {
     textArea.setRangeText('\n', start, end, 'end');
   } else if (['Shift', 'Alt', 'Ctrl', 'Win'].includes((point))) {
   } else if (point === 'CapsLock') {
-    getChangeForCapsLock();
+    getChangeCapsLock();
   } else {
     evt.target.style.backgroundColor = 'green';
     textArea.setRangeText(point, start, end, 'end');
