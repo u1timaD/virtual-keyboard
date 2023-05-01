@@ -231,33 +231,6 @@ function getChangeLanguage() {
   }
 }
 
-function buttonClick(evt) {
-  const point = evt.target.textContent;
-  const start = textArea.selectionStart;
-  const end = textArea.selectionEnd;
-
-  if (point === 'Backspace') {
-    if (start === end) {
-      textArea.setRangeText('', start - 1, end, 'end');
-    } else {
-      textArea.setRangeText('', start, end, 'select');
-    }
-  } else if (point === 'Tab') {
-    textArea.setRangeText('   ', start, end, 'end');
-  } else if (point === 'Del') {
-    textArea.setRangeText('', start, end + 1, 'end');
-  } else if (point === 'Enter') {
-    textArea.setRangeText('\n', start, end, 'end');
-  } else if (['Shift', 'Alt', 'Ctrl', 'Win'].includes((point))) {
-  } else if (point === 'CapsLock') {
-    getChangeCapsLock();
-  } else {
-    evt.target.style.backgroundColor = 'green';
-    textArea.setRangeText(point, start, end, 'end');
-    textArea.focus();
-  }
-}
-
 function ColorOfButtonOn(evt) {
   const key = evt.code;
   const button = document.querySelector(`[data-name="${key}"]`);
@@ -324,13 +297,44 @@ function pressOffButton(evt) {
 textArea.addEventListener('keydown', pressOnButton);
 textArea.addEventListener('keyup', pressOffButton);
 
+function buttonClick(evt) {
+  const point = evt.target.textContent;
+  const start = textArea.selectionStart;
+  const end = textArea.selectionEnd;
+  const buttonColor = evt.target.style;
+  buttonColor.backgroundColor = 'green';
+
+  if (point === 'Backspace') {
+    if (start === end) {
+      textArea.setRangeText('', start - 1, end, 'end');
+    } else {
+      textArea.setRangeText('', start, end, 'select');
+    }
+  } else if (point === 'Tab') {
+    textArea.setRangeText('   ', start, end, 'end');
+  } else if (point === 'Del') {
+    textArea.setRangeText('', start, end + 1, 'end');
+  } else if (point === 'Enter') {
+    textArea.setRangeText('\n', start, end, 'end');
+  } else if (['Shift', 'Alt', 'Ctrl', 'Win'].includes((point))) {
+    textArea.focus();
+  } else if (point === 'CapsLock') {
+    getChangeCapsLock();
+  } else {
+    textArea.setRangeText(point, start, end, 'end');
+    textArea.focus();
+  }
+}
+
 function buttonOnClick(evt) {
   const point = evt.target.textContent;
+  const buttonColorDefault = evt.target.style;
+  buttonColorDefault.backgroundColor = 'rebeccapurple';
 
   if (['Backspace', 'Tab', 'Del', 'Enter', 'Shift', 'Alt', 'Ctrl', ' ', 'Win'].includes(point)) {
     textArea.focus();
   } else {
-    evt.target.style.backgroundColor = 'rebeccapurple';
+    textArea.focus();
   }
 }
 
