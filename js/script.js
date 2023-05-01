@@ -218,13 +218,15 @@ const getChangeLanguage = () => {
 function ColorOfButtonOn(evt) {
   const key = evt.code;
   const button = document.querySelector(`[data-name="${key}"]`);
-  button.style.backgroundColor = 'white';
+  button.style.backgroundColor = 'red';
+  button.style.transform = 'scale(0.8)';
 }
 
 function ColorOfButtonOff(evt) {
   const key = evt.code;
   const button = document.querySelector(`[data-name="${key}"]`);
   button.style.backgroundColor = '';
+  button.style.transform = '';
 }
 
 window.addEventListener('keydown', (evt) => {
@@ -288,8 +290,9 @@ function buttonClick(evt) {
     const point = evt.target.textContent;
     const start = textArea.selectionStart;
     const end = textArea.selectionEnd;
-    const buttonColor = evt.target.style;
-    buttonColor.backgroundColor = 'green';
+    const button = evt.target.style;
+    button.backgroundColor = 'green';
+    button.transform = 'scale(0.8)';
 
     if (point === 'Backspace') {
       if (start === end) {
@@ -321,8 +324,9 @@ function buttonOnClick(evt) {
     textArea.focus();
   } else {
     const point = evt.target.textContent;
-    const buttonColorDefault = evt.target.style;
-    buttonColorDefault.backgroundColor = 'rebeccapurple';
+    const button = evt.target.style;
+    button.backgroundColor = 'rebeccapurple';
+    button.transform = '';
 
     if (['Backspace', 'Tab', 'Del', 'Enter', 'Shift', 'Alt', 'Ctrl', ' ', 'Win'].includes(point)) {
       textArea.focus();

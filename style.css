@@ -33,6 +33,7 @@
 }
 
 .key-button {
+  text-align: center;
 	border-radius: 5px;
 	display: block;
 	width: 70px;
@@ -47,7 +48,7 @@
 }
 
 .key-name {
-	display: block;
+	display: inline-block;
 	color: bisque;
 	font-size: 20px;
 	margin: 0;
