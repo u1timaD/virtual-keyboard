@@ -4,6 +4,13 @@
 	padding: 0;
 }
 
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
 .textarea {
 	font-size: 40px;
 	margin: 0 auto;
@@ -105,4 +112,15 @@
 
 .upperCase {
   text-transform: uppercase;
+}
+
+.info {
+  display: flex;
+  padding: 100px;
+}
+
+.info-box{
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 30px;
 }

@@ -1,12 +1,22 @@
 const body = document.querySelector('.body');
 const textArea = document.createElement('textarea');
+const value = localStorage.getItem('textAreaValue');
 textArea.classList = 'textarea';
-textArea.cols = '40';
+textArea.cols = '60';
 textArea.rows = '10';
 body.prepend(textArea);
 textArea.focus();
+textArea.value = value;
 
-const en = [
+const info = document.createElement('div');
+info.classList = 'info';
+const infoBox = document.createElement('p');
+infoBox.classList = 'info-box';
+infoBox.textContent = 'Клавиатура создана в операционной системе Windows. Для переключения языка комбинация: левыe "ctrl" + "левый alt"';
+info.prepend(infoBox);
+body.prepend(info);
+
+const keyBoardData = [
   { Backquote: ['`', '~', 'ё', 'Ё'] },
   { Digit1: ['1', '!', '1', '!'] },
   { Digit2: ['2', '@', '2', '"'] },
@@ -152,7 +162,7 @@ let language = 'en';
 
 function changeToUpperCaseWord(str) {
   const words = str.split(' ');
-  for (let i = 0; i < words.length; i++) {
+  for (let i = 0; i < words.length; i += 1) {
     if (words[i].length <= 1) {
       words[i] = words[i].toUpperCase();
     }
@@ -162,7 +172,7 @@ function changeToUpperCaseWord(str) {
 
 function changeToLowerCaseWord(str) {
   const words = str.split(' ');
-  for (let i = 0; i < words.length; i++) {
+  for (let i = 0; i < words.length; i += 1) {
     if (words[i].length <= 1) {
       words[i] = words[i].toLowerCase();
     }
@@ -172,24 +182,22 @@ function changeToLowerCaseWord(str) {
 
 function getRenderWords(lang = 0) {
   const keyName = document.querySelectorAll('.key-name');
-  for (let i = 0; i < en.length; i += 1) {
-    const word = Object.values(en[i])[0][lang];
+  for (let i = 0; i < keyBoardData.length; i += 1) {
+    const word = Object.values(keyBoardData[i])[0][lang];
+    const data = Object.keys(keyBoardData[i])[0];
 
     if (capsLock === 'off' && size === 'lower' && row === '0') {
       keyName[i].textContent = changeToLowerCaseWord(word);
-      keyName[i].dataset.name = Object.keys(en[i])[0];
-    }
-    else if (capsLock === 'on' && size === 'upper' && row === '1') {
+      keyName[i].dataset.name = data;
+    } else if (capsLock === 'on' && size === 'upper' && row === '1') {
       keyName[i].textContent = changeToUpperCaseWord(word);
-      keyName[i].dataset.name = Object.keys(en[i])[0];
-    }
-    else if (capsLock === 'off' && size === 'upper' && row === '1') {
+      keyName[i].dataset.name = data;
+    } else if (capsLock === 'off' && size === 'upper' && row === '1') {
       keyName[i].textContent = changeToUpperCaseWord(word);
-      keyName[i].dataset.name = Object.keys(en[i])[0];
-    }
-    else if (capsLock === 'on' && size === 'lower' && row === '0') {
+      keyName[i].dataset.name = data;
+    } else if (capsLock === 'on' && size === 'lower' && row === '0') {
       keyName[i].textContent = changeToLowerCaseWord(word);
-      keyName[i].dataset.name = Object.keys(en[i])[0];
+      keyName[i].dataset.name = data;
     }
   }
 }
@@ -331,7 +339,7 @@ function pressOnButton(evt) {
   } else if (['AltLeft', 'AltRight', 'ControlLeft', 'ControlRight', 'MetaLeft'].includes((key))) {
     textArea.focus();
   } else if (key === 'ShiftLeft' || key === 'ShiftRight') {
-    console.log('Сработало нажатие');
+    textArea.focus();
     getChangeCase();
   } else if (key === 'CapsLock') {
     getChangeCapsLock();
@@ -339,6 +347,7 @@ function pressOnButton(evt) {
     textArea.setRangeText(button, start, end, 'end');
     textArea.focus();
   }
+  localStorage.setItem('textAreaValue', textArea.value);
 }
 
 function pressOffButton(evt) {
@@ -352,43 +361,54 @@ textArea.addEventListener('keydown', pressOnButton);
 textArea.addEventListener('keyup', pressOffButton);
 
 function buttonClick(evt) {
-  const point = evt.target.textContent;
-  const start = textArea.selectionStart;
-  const end = textArea.selectionEnd;
-  const buttonColor = evt.target.style;
-  buttonColor.backgroundColor = 'green';
-
-  if (point === 'Backspace') {
-    if (start === end) {
-      textArea.setRangeText('', start - 1, end, 'end');
-    } else {
-      textArea.setRangeText('', start, end, 'select');
-    }
-  } else if (point === 'Tab') {
-    textArea.setRangeText('   ', start, end, 'end');
-  } else if (point === 'Del') {
-    textArea.setRangeText('', start, end + 1, 'end');
-  } else if (point === 'Enter') {
-    textArea.setRangeText('\n', start, end, 'end');
-  } else if (['Shift', 'Alt', 'Ctrl', 'Win'].includes((point))) {
+  const parentClass = evt.target.className;
+  if (parentClass === 'key-line' || parentClass === 'key-board') {
     textArea.focus();
-  } else if (point === 'CapsLock') {
-    getChangeCapsLock();
   } else {
-    textArea.setRangeText(point, start, end, 'end');
-    textArea.focus();
+    const point = evt.target.textContent;
+    const start = textArea.selectionStart;
+    const end = textArea.selectionEnd;
+    const buttonColor = evt.target.style;
+    buttonColor.backgroundColor = 'green';
+
+    if (point === 'Backspace') {
+      if (start === end) {
+        textArea.setRangeText('', start - 1, end, 'end');
+      } else {
+        textArea.setRangeText('', start, end, 'select');
+      }
+    } else if (point === 'Tab') {
+      textArea.setRangeText('   ', start, end, 'end');
+    } else if (point === 'Del') {
+      textArea.setRangeText('', start, end + 1, 'end');
+    } else if (point === 'Enter') {
+      textArea.setRangeText('\n', start, end, 'end');
+    } else if (['Shift', 'Alt', 'Ctrl', 'Win'].includes((point))) {
+      textArea.focus();
+    } else if (point === 'CapsLock') {
+      getChangeCapsLock();
+    } else {
+      textArea.setRangeText(point, start, end, 'end');
+      textArea.focus();
+    }
+    localStorage.setItem('textAreaValue', textArea.value);
   }
 }
 
 function buttonOnClick(evt) {
-  const point = evt.target.textContent;
-  const buttonColorDefault = evt.target.style;
-  buttonColorDefault.backgroundColor = 'rebeccapurple';
-
-  if (['Backspace', 'Tab', 'Del', 'Enter', 'Shift', 'Alt', 'Ctrl', ' ', 'Win'].includes(point)) {
+  const parentClass = evt.target.className;
+  if (parentClass === 'key-line' || parentClass === 'key-board') {
     textArea.focus();
   } else {
-    textArea.focus();
+    const point = evt.target.textContent;
+    const buttonColorDefault = evt.target.style;
+    buttonColorDefault.backgroundColor = 'rebeccapurple';
+
+    if (['Backspace', 'Tab', 'Del', 'Enter', 'Shift', 'Alt', 'Ctrl', ' ', 'Win'].includes(point)) {
+      textArea.focus();
+    } else {
+      textArea.focus();
+    }
   }
 }
 
@@ -408,3 +428,29 @@ shiftButtonFirst.addEventListener('mousedown', getShiftClick);
 shiftButtonFirst.addEventListener('mouseup', getShiftClick);
 shiftButtonLast.addEventListener('mousedown', getShiftClick);
 shiftButtonLast.addEventListener('mouseup', getShiftClick);
+
+function runOnKeys(...codes) {
+  const pressed = new Set();
+
+  document.addEventListener('keydown', (event) => {
+    pressed.add(event.code);
+
+    for (let i = 0; i < codes.length; i += 1) {
+      const code = codes[i];
+      if (!pressed.has(code)) {
+        return;
+      }
+    }
+    pressed.clear();
+    getChangeLanguage();
+  });
+
+  document.addEventListener('keyup', (event) => {
+    pressed.delete(event.code);
+  });
+}
+
+runOnKeys(
+  'ControlLeft',
+  'AltLeft',
+);
