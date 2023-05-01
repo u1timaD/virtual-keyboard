@@ -320,3 +320,30 @@ function pressOffButton(evt) {
 
 textArea.addEventListener('keydown', pressOnButton);
 textArea.addEventListener('keyup', pressOffButton);
+
+function buttonOnClick(evt) {
+  const point = evt.target.textContent;
+
+  if (['Backspace', 'Tab', 'Del', 'Enter', 'Shift', 'Alt', 'Ctrl', ' ', 'Win'].includes(point)) {
+    textArea.focus();
+  } else {
+    evt.target.style.backgroundColor = 'rebeccapurple';
+  }
+}
+
+const keyBoard = document.querySelector('.key-board');
+keyBoard.addEventListener('mousedown', buttonClick);
+keyBoard.addEventListener('mouseup', buttonOnClick);
+
+function getShiftClick() {
+  getChangeCase();
+}
+
+const keyLine = document.querySelector('[data-line="3"]');
+const shiftButtonFirst = keyLine.querySelector('[data-button-name="0"]');
+const shiftButtonLast = keyLine.querySelector('[data-button-name="12"]');
+
+shiftButtonFirst.addEventListener('mousedown', getShiftClick);
+shiftButtonFirst.addEventListener('mouseup', getShiftClick);
+shiftButtonLast.addEventListener('mousedown', getShiftClick);
+shiftButtonLast.addEventListener('mouseup', getShiftClick);
